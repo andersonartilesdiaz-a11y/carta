@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feliz Día de la Novia ❤️</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
             background-color: #0f172a;
             color: #f8fafc;
@@ -15,44 +19,38 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            box-sizing: border-box;
         }
         .container {
-            background: rgba(30, 41, 59, 0.95);
-            padding: 30px 20px;
+            background: #1e293b;
+            padding: 35px 25px;
             border-radius: 20px;
             border: 2px solid #eab308;
             width: 100%;
-            max-width: 600px; /* Aquí se hace más amplia */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            box-sizing: border-box;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-align: center;
         }
         h1 { 
             color: #eab308; 
-            text-shadow: 2px 2px #000; 
             font-size: 26px; 
+            margin-top: 0;
             margin-bottom: 20px; 
-            text-align: center;
         }
         p { 
-            font-size: 19px; 
-            line-height: 1.7; 
+            font-size: 18px; 
+            line-height: 1.6; 
             color: #cbd5e1; 
             text-align: left; 
             white-space: pre-line;
             margin: 0;
         }
-        .input-group {
-            text-align: center;
-        }
         input {
-            width: 90%;
-            max-width: 350px;
+            width: 100%;
             padding: 14px;
-            margin: 15px 0;
+            margin: 20px 0;
             border-radius: 10px;
             border: 1px solid #eab308;
-            background: #1e293b;
+            background: #0f172a;
             color: white;
             text-align: center;
             font-size: 18px;
@@ -61,16 +59,16 @@
             background: #eab308;
             color: #000;
             border: none;
-            padding: 14px 28px;
+            padding: 14px 30px;
             font-size: 18px;
             font-weight: bold;
             border-radius: 10px;
             cursor: pointer;
-            display: block;
-            margin: 10px auto 0 auto;
+            width: 100%;
         }
-        button:hover { background: #ca8a04; }
-        .hidden { display: none; }
+        .hidden { 
+            display: none !important; 
+        }
         .cursor {
             display: inline-block;
             width: 3px;
@@ -86,21 +84,23 @@
 </head>
 <body>
 
-    <!-- PANTALLA 1: PIDE EL NOMBRE -->
-    <div id="login-box" class="container">
-        <h1>🏴‍☠️ ¡Alto ahí! 🏴‍☠️</h1>
-        <p style="text-align: center;">Para ingresar a este tesoro del Grand Line, por favor escribe tu nombre:</p>
-        <div class="input-group">
+    <!-- SÓLO UN CUADRO A LA VEZ -->
+    <div id="pantalla-principal" class="container">
+        
+        <!-- PANTALLA 1: PEDIR NOMBRE -->
+        <div id="login-box">
+            <h1>🏴‍☠️ ¡Alto ahí! 🏴‍☠️</h1>
+            <p style="text-align: center;">Para ingresar a este tesoro del Grand Line, por favor escribe tu nombre:</p>
             <input type="text" id="nombre-input" placeholder="Tu nombre aquí...">
-            <br>
             <button onclick="iniciarCarta()">Ingresar</button>
         </div>
-    </div>
 
-    <!-- PANTALLA 2: LA CARTA CON EFECTO DE ESCRITURA -->
-    <div id="carta-box" class="container hidden">
-        <h1>¡Feliz Día de la Novia! 🏴‍☠️❤️</h1>
-        <p><span id="texto-carta"></span><span id="cursor-efecto" class="cursor">&nbsp;</span></p>
+        <!-- PANTALLA 2: CARTA OCULTA -->
+        <div id="carta-box" class="hidden">
+            <h1>¡Feliz Día de la Novia! 🏴‍☠️❤️</h1>
+            <p><span id="texto-carta"></span><span id="cursor-efecto" class="cursor">&nbsp;</span></p>
+        </div>
+
     </div>
 
     <script>
@@ -115,6 +115,7 @@
                                 "Desde que comenzamos este viaje juntos, supe que no importan las tormentas ni los caminos difíciles, porque tenerte a mi lado hace que cada aventura valga la pena.\n\n" +
                                 "Gracias por ser mi compañera, por tu sonrisa y por hacerme tan feliz todos los días. ¡Te amo con todo mi corazón! En este viaje... ¡siempre juntos! 🏴‍☠️❤️";
 
+                // Esto oculta el cuadro del nombre por completo y activa la carta
                 document.getElementById('login-box').classList.add('hidden');
                 document.getElementById('carta-box').classList.remove('hidden');
                 
@@ -129,7 +130,7 @@
                 document.getElementById('texto-carta').innerHTML += textoCompleto.charAt(indice);
                 setTimeout(function() {
                     escribirLetraPorLetra(indice + 1);
-                }, 50);
+                }, 45);
             } else {
                 document.getElementById('cursor-efecto').style.display = 'none';
             }
@@ -137,4 +138,3 @@
     </script>
 </body>
 </html>
-
