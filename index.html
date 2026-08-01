@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para mi Luffy de parte de su Nami</title>
+    <title>Para mi persona favorita</title>
     <style>
         body {
             background-color: #0f172a;
@@ -11,43 +11,81 @@
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
         }
         .container {
-            background: rgba(30, 41, 59, 0.8);
-            padding: 25px;
+            background: rgba(30, 41, 59, 0.9);
+            padding: 30px;
             border-radius: 20px;
             border: 2px solid #eab308;
-            max-width: 450px;
-            margin: auto;
+            max-width: 400px;
+            width: 90%;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
-        h1 { color: #eab308; text-shadow: 2px 2px #000; }
-        p { font-size: 16px; line-height: 1.6; color: #cbd5e1; }
-        .photo-placeholder {
-            width: 100%;
-            height: 250px;
-            background: #334155;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 20px 0;
-            border: 2px dashed #eab308;
-            color: #94a3b8;
+        h1 { color: #eab308; text-shadow: 2px 2px #000; font-size: 24px; }
+        p { font-size: 18px; line-height: 1.6; color: #cbd5e1; }
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 1px solid #eab308;
+            background: #1e293b;
+            color: white;
+            text-align: center;
+            font-size: 16px;
         }
+        button {
+            background: #eab308;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:hover { background: #ca8a04; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>¡Nuestro Gran Viaje Juntos! 🏴‍☠️❤️</h1>
-        <p>Eres mi tesoro más grande en todo el Grand Line. Gracias por estar siempre a mi lado.</p>
-        
-        <!-- Aquí irá tu foto editada juntos -->
-        <div class="photo-placeholder">
-            <span>[Aquí pondremos tu foto editada de ustedes]</span>
-        </div>
-        
-        <p>¡Te amo con todo mi corazón! En cada aventura, siempre juntos.</p>
+
+    <!-- PANTALLA 1: PIDE EL NOMBRE -->
+    <div id="login-box" class="container">
+        <h1>🏴‍☠️ ¡Alto ahí! 🏴‍☠️</h1>
+        <p>Para ingresar a este tesoro, por favor escribe tu nombre:</p>
+        <input type="text" id="nombre-input" placeholder="Tu nombre aquí...">
+        <br>
+        <button onclick="verificarNombre()">Ingresar</button>
     </div>
+
+    <!-- PANTALLA 2: LA CARTA DE AMOR (OCULTA AL PRINCIPIO) -->
+    <div id="carta-box" class="container hidden">
+        <h1>¡Nuestro Gran Viaje Juntos! ❤️</h1>
+        <p>¡Hola <span id="nombre-novia" style="color: #eab308; font-weight: bold;"></span>!</p>
+        <p>Desde que entraste a mi vida, supe que había encontrado mi tesoro más grande en todo el Grand Line. Gracias por ser mi compañera de aventuras y por estar siempre a mi lado.</p>
+        <p>Te amo con todo mi corazón. ¡Siempre juntos! 🏴‍☠️✨</p>
+    </div>
+
+    <script>
+        function verificarNombre() {
+            var nombre = document.getElementById('nombre-input').value;
+            if (nombre.trim() !== "") {
+                // Pone el nombre que ella escribió dentro de la carta
+                document.getElementById('nombre-novia').innerText = nombre;
+                // Oculta la caja del nombre
+                document.getElementById('login-box').classList.add('hidden');
+                // Muestra la carta de amor
+                document.getElementById('carta-box').classList.remove('hidden');
+            } else {
+                alert("¡Por favor, escribe tu nombre para continuar! 😉");
+            }
+        }
+    </script>
 </body>
 </html>
+
