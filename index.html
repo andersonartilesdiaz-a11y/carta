@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,70 +9,92 @@
             box-sizing: border-box;
         }
         body {
-            background-color: #0f172a;
-            color: #f8fafc;
-            font-family: Arial, sans-serif;
+            background-color: #fff1f2; 
+            color: #4c0519; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
         }
         .container {
-            background: #1e293b;
-            padding: 35px 25px;
-            border-radius: 20px;
-            border: 2px solid #eab308;
-            width: 100%;
-            max-width: 500px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            text-align: center;
+            background: #ffffff;
+            width: 100vw; 
+            min-height: 100vh; 
+            padding: 40px 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        @media (min-width: 600px) {
+            .container {
+                width: 95%;
+                max-width: 650px;
+                min-height: 90vh;
+                border-radius: 24px;
+                box-shadow: 0 15px 40px rgba(251, 113, 133, 0.2);
+            }
         }
         h1 { 
-            color: #eab308; 
-            font-size: 26px; 
+            color: #db2777; 
+            font-size: 34px; 
             margin-top: 0;
-            margin-bottom: 20px; 
+            margin-bottom: 30px; 
+            text-align: center;
         }
         p { 
-            font-size: 18px; 
-            line-height: 1.6; 
-            color: #cbd5e1; 
+            font-size: 24px; 
+            line-height: 1.8; 
+            color: #4c0519; 
             text-align: left; 
             white-space: pre-line;
             margin: 0;
+            width: 100%;
+        }
+        .input-wrapper {
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
         }
         input {
             width: 100%;
-            padding: 14px;
-            margin: 20px 0;
-            border-radius: 10px;
-            border: 1px solid #eab308;
-            background: #0f172a;
-            color: white;
+            padding: 18px;
+            margin: 25px 0;
+            border-radius: 12px;
+            border: 2px solid #fbcfe8;
+            background: #fff5f5;
+            color: #881337;
             text-align: center;
-            font-size: 18px;
+            font-size: 22px; 
+            outline: none;
         }
         button {
-            background: #eab308;
-            color: #000;
+            background: #db2777;
+            color: white;
             border: none;
-            padding: 14px 30px;
-            font-size: 18px;
+            padding: 18px 30px;
+            font-size: 22px; 
             font-weight: bold;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
             width: 100%;
+        }
+        button:hover { 
+            background: #be185d; 
         }
         .hidden { 
             display: none !important; 
         }
         .cursor {
             display: inline-block;
-            width: 3px;
-            background-color: #eab308;
+            width: 4px;
+            height: 28px;
+            background-color: #db2777;
             margin-left: 2px;
+            vertical-align: middle;
             animation: parpadeo 0.7s infinite;
         }
         @keyframes parpadeo {
@@ -84,21 +105,20 @@
 </head>
 <body>
 
-    <!-- SÓLO UN CUADRO A LA VEZ -->
-    <div id="pantalla-principal" class="container">
+    <div class="container">
         
-        <!-- PANTALLA 1: PEDIR NOMBRE -->
-        <div id="login-box">
-            <h1>🏴‍☠️ ¡Alto ahí! 🏴‍☠️</h1>
-            <p style="text-align: center;">Para ingresar a este tesoro del Grand Line, por favor escribe tu nombre:</p>
-            <input type="text" id="nombre-input" placeholder="Tu nombre aquí...">
-            <button onclick="iniciarCarta()">Ingresar</button>
+        <!-- PANTALLA 1: INGRESO -->
+        <div id="login-box" class="input-wrapper">
+            <h1>Para alguien especial ❤️</h1>
+            <p style="text-align: center; font-size: 22px;">Para descubrir el mensaje que tengo guardado para ti, escribe tu nombre aquí debajo:</p>
+            <input type="text" id="nombre-input" placeholder="Tu nombre hermoso...">
+            <button onclick="iniciarCarta()">Ver mi sorpresa</button>
         </div>
 
-        <!-- PANTALLA 2: CARTA OCULTA -->
-        <div id="carta-box" class="hidden">
-            <h1>¡Feliz Día de la Novia! 🏴‍☠️❤️</h1>
-            <p><span id="texto-carta"></span><span id="cursor-efecto" class="cursor">&nbsp;</span></p>
+        <!-- PANTALLA 2: LA CARTA ENORME Y LARGA -->
+        <div id="carta-box" class="hidden" style="width: 100%;">
+            <h1>¡Feliz Día de la Novia! 💕</h1>
+            <p><span id="texto-carta"></span><span id="cursor-efecto" class="cursor"></span></p>
         </div>
 
     </div>
@@ -110,18 +130,20 @@
             var nombre = document.getElementById('nombre-input').value.trim();
             
             if (nombre !== "") {
-                textoCompleto = "¡Hola, mi " + nombre + "! ✨\n\n" +
-                                "Hoy en el Día de la Novia quería recordarte que eres mi tesoro más grande en todo el Grand Line.\n\n" +
-                                "Desde que comenzamos este viaje juntos, supe que no importan las tormentas ni los caminos difíciles, porque tenerte a mi lado hace que cada aventura valga la pena.\n\n" +
-                                "Gracias por ser mi compañera, por tu sonrisa y por hacerme tan feliz todos los días. ¡Te amo con todo mi corazón! En este viaje... ¡siempre juntos! 🏴‍☠️❤️";
+                // Una carta mucho más larga, detallada y romántica
+                textoCompleto = "¡Hola, mi hermosa " + nombre + "! ✨\n\n" +
+                                "Hoy es el Día de la Novia, y no podía dejar pasar este momento sin recordarte lo increíblemente afortunado que me siento de tenerte en mi vida. Esta página es solo un pequeño detalle para intentar expresarte todo lo que significas para mí.\n\n" +
+                                "Desde el día en que entraste a mi mundo, todo cambió para mejor. Me has enseñado lo bonito que es compartir los días con alguien que te apoya, te cuida y te llena de alegría con una sola mirada. Cada sonrisa tuya tiene el poder de iluminar hasta mi día más gris, y cada momento a tu lado se convierte en un recuerdo inolvidable.\n\n" +
+                                "Gracias por ser mi paz, mi cómplice y la persona con la que quiero compartir cada paso de este camino. Valoro muchísimo tu ternura, tu paciencia y la forma tan única en la que me haces sentir amado todos los días. Eres, sin duda alguna, la novia más maravillosa, atenta y hermosa del universo entero.\n\n" +
+                                "Espero que este día sea súper especial para ti, porque te mereces todo lo bueno que este mundo pueda ofrecer. Prometo seguir cuidando de nosotros y dar lo mejor de mí para hacerte tan feliz como tú me haces a mí.\n\n" +
+                                "Te amo con cada rincón de mi corazón. ¡Feliz día hoy y siempre! ❤️✨";
 
-                // Esto oculta el cuadro del nombre por completo y activa la carta
                 document.getElementById('login-box').classList.add('hidden');
                 document.getElementById('carta-box').classList.remove('hidden');
                 
                 escribirLetraPorLetra(0);
             } else {
-                alert("¡Por favor, escribe tu nombre para continuar! 😉");
+                alert("¡Por favor, escribe tu nombre para ver la sorpresa! 😉❤️");
             }
         }
 
@@ -130,7 +152,7 @@
                 document.getElementById('texto-carta').innerHTML += textoCompleto.charAt(indice);
                 setTimeout(function() {
                     escribirLetraPorLetra(indice + 1);
-                }, 45);
+                }, 35); // Un pelín más rápido para que la lectura larga fluya increíble
             } else {
                 document.getElementById('cursor-efecto').style.display = 'none';
             }
@@ -138,3 +160,4 @@
     </script>
 </body>
 </html>
+
