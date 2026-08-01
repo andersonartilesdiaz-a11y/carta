@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para mi persona favorita</title>
+    <title>Feliz Día de la Novia ❤️</title>
     <style>
         body {
             background-color: #0f172a;
@@ -14,22 +14,22 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 80vh;
+            min-height: 85vh;
         }
         .container {
             background: rgba(30, 41, 59, 0.9);
             padding: 30px;
             border-radius: 20px;
             border: 2px solid #eab308;
-            max-width: 400px;
+            max-width: 450px;
             width: 90%;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
-        h1 { color: #eab308; text-shadow: 2px 2px #000; font-size: 24px; }
-        p { font-size: 18px; line-height: 1.6; color: #cbd5e1; }
+        h1 { color: #eab308; text-shadow: 2px 2px #000; font-size: 26px; margin-bottom: 20px; }
+        p { font-size: 18px; line-height: 1.6; color: #cbd5e1; text-align: left; min-height: 50px; }
         input {
             width: 80%;
-            padding: 10px;
+            padding: 12px;
             margin: 15px 0;
             border-radius: 8px;
             border: 1px solid #eab308;
@@ -42,14 +42,27 @@
             background: #eab308;
             color: #000;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 25px;
             font-size: 16px;
             font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
+            margin-top: 10px;
         }
         button:hover { background: #ca8a04; }
         .hidden { display: none; }
+        /* Cursor parpadeante simulando la escritura */
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            background-color: #eab308;
+            margin-left: 2px;
+            animation: parpadeo 0.7s infinite;
+        }
+        @keyframes parpadeo {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -57,29 +70,63 @@
     <!-- PANTALLA 1: PIDE EL NOMBRE -->
     <div id="login-box" class="container">
         <h1>🏴‍☠️ ¡Alto ahí! 🏴‍☠️</h1>
-        <p>Para ingresar a este tesoro, por favor escribe tu nombre:</p>
+        <p style="text-align: center;">Para ingresar a este tesoro del Grand Line, por favor escribe tu nombre:</p>
         <input type="text" id="nombre-input" placeholder="Tu nombre aquí...">
         <br>
-        <button onclick="verificarNombre()">Ingresar</button>
+        <button onclick="iniciarCarta()">Ingresar</button>
     </div>
 
-    <!-- PANTALLA 2: LA CARTA DE AMOR (OCULTA AL PRINCIPIO) -->
+    <!-- PANTALLA 2: LA CARTA DE AMOR CON EFECTO DE ESCRITURA -->
     <div id="carta-box" class="container hidden">
-        <h1>¡Nuestro Gran Viaje Juntos! ❤️</h1>
-        <p>¡Hola <span id="nombre-novia" style="color: #eab308; font-weight: bold;"></span>!</p>
-        <p>Desde que entraste a mi vida, supe que había encontrado mi tesoro más grande en todo el Grand Line. Gracias por ser mi compañera de aventuras y por estar siempre a mi lado.</p>
-        <p>Te amo con todo mi corazón. ¡Siempre juntos! 🏴‍☠️✨</p>
+        <h1 id="titulo-carta">¡Feliz Día de la Novia! 🏴‍☠️❤️</h1>
+        <p id="texto-carta"></p><span id="cursor-efecto" class="cursor">&nbsp;</span>
     </div>
 
     <script>
-        function verificarNombre() {
-            var nombre = document.getElementById('nombre-input').value;
-            if (nombre.trim() !== "") {
-                document.getElementById('nombre-novia').innerText = nombre;
+        // Aquí puedes cambiar el mensaje largo por el que tú quieras detallar
+        var textoCompleto = "";
+
+        function iniciarCarta() {
+            var nombre = document.getElementById('nombre-input').value.trim();
+            
+            if (nombre !== "") {
+                // Definimos el texto personalizado usando el nombre que introduzca
+                textoCompleto = "¡Hola, mi " + nombre + "! ✨\n\n" +
+                                "Hoy en el Día de la Novia quería recordarte que eres mi tesoro más grande en todo el Grand Line. " +
+                                "Desde que comenzamos este viaje juntos, supe que no importan las tormentas ni los caminos difíciles, " +
+                                "porque tenerte a mi lado hace que cada aventura valga la pena.\n\n" +
+                                "Gracias por ser mi compañera, por tu sonrisa y por hacerme tan feliz todos los días. " +
+                                "¡Te amo con todo mi corazón! En este viaje... ¡siempre juntos! 🏴‍☠️❤️";
+
+                // Ocultamos la caja del nombre y mostramos la carta
                 document.getElementById('login-box').classList.add('hidden');
                 document.getElementById('carta-box').classList.remove('hidden');
+                
+                // Iniciamos el efecto de escritura automática paso a paso
+                escribirLetraPorLetra(0);
             } else {
                 alert("¡Por favor, escribe tu nombre para continuar! 😉");
+            }
+        }
+
+        function escribirLetraPorLetra(indice) {
+            if (indice < textoCompleto.length) {
+                var caracter = textoCompleto.charAt(indice);
+                
+                // Si encuentra un salto de línea (\n), lo convierte en una etiqueta <br> para que baje el texto
+                if (caracter === "\n") {
+                    document.getElementById('texto-carta').innerHTML += "<br>";
+                } else {
+                    document.getElementById('texto-carta').innerHTML += caracter;
+                }
+                
+                // Velocidad de escritura en milisegundos (50ms por letra)
+                setTimeout(function() {
+                    escribirLetraPorLetra(indice + 1);
+                }, 50);
+            } else {
+                // Cuando termina de escribir, oculta el cursor parpadeante
+                document.getElementById('cursor-efecto').style.display = 'none';
             }
         }
     </script>
@@ -90,7 +137,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para mi persona favorita</title>
+    <title>Feliz Día de la Novia ❤️</title>
     <style>
         body {
             background-color: #0f172a;
@@ -101,22 +148,22 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 80vh;
+            min-height: 85vh;
         }
         .container {
             background: rgba(30, 41, 59, 0.9);
             padding: 30px;
             border-radius: 20px;
             border: 2px solid #eab308;
-            max-width: 400px;
+            max-width: 450px;
             width: 90%;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
-        h1 { color: #eab308; text-shadow: 2px 2px #000; font-size: 24px; }
-        p { font-size: 18px; line-height: 1.6; color: #cbd5e1; }
+        h1 { color: #eab308; text-shadow: 2px 2px #000; font-size: 26px; margin-bottom: 20px; }
+        p { font-size: 18px; line-height: 1.6; color: #cbd5e1; text-align: left; min-height: 50px; }
         input {
             width: 80%;
-            padding: 10px;
+            padding: 12px;
             margin: 15px 0;
             border-radius: 8px;
             border: 1px solid #eab308;
@@ -129,14 +176,27 @@
             background: #eab308;
             color: #000;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 25px;
             font-size: 16px;
             font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
+            margin-top: 10px;
         }
         button:hover { background: #ca8a04; }
         .hidden { display: none; }
+        /* Cursor parpadeante simulando la escritura */
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            background-color: #eab308;
+            margin-left: 2px;
+            animation: parpadeo 0.7s infinite;
+        }
+        @keyframes parpadeo {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -144,33 +204,199 @@
     <!-- PANTALLA 1: PIDE EL NOMBRE -->
     <div id="login-box" class="container">
         <h1>🏴‍☠️ ¡Alto ahí! 🏴‍☠️</h1>
-        <p>Para ingresar a este tesoro, por favor escribe tu nombre:</p>
+        <p style="text-align: center;">Para ingresar a este tesoro del Grand Line, por favor escribe tu nombre:</p>
         <input type="text" id="nombre-input" placeholder="Tu nombre aquí...">
         <br>
-        <button onclick="verificarNombre()">Ingresar</button>
+        <button onclick="iniciarCarta()">Ingresar</button>
     </div>
 
-    <!-- PANTALLA 2: LA CARTA DE AMOR (OCULTA AL PRINCIPIO) -->
+    <!-- PANTALLA 2: LA CARTA DE AMOR CON EFECTO DE ESCRITURA -->
     <div id="carta-box" class="container hidden">
-        <h1>¡Nuestro Gran Viaje Juntos! ❤️</h1>
-        <p>¡Hola <span id="nombre-novia" style="color: #eab308; font-weight: bold;"></span>!</p>
-        <p>Desde que entraste a mi vida, supe que había encontrado mi tesoro más grande en todo el Grand Line. Gracias por ser mi compañera de aventuras y por estar siempre a mi lado.</p>
-        <p>Te amo con todo mi corazón. ¡Siempre juntos! 🏴‍☠️✨</p>
+        <h1 id="titulo-carta">¡Feliz Día de la Novia! 🏴‍☠️❤️</h1>
+        <p id="texto-carta"></p><span id="cursor-efecto" class="cursor">&nbsp;</span>
     </div>
 
     <script>
-        function verificarNombre() {
-            var nombre = document.getElementById('nombre-input').value;
-            if (nombre.trim() !== "") {
-                document.getElementById('nombre-novia').innerText = nombre;
+        // Aquí puedes cambiar el mensaje largo por el que tú quieras detallar
+        var textoCompleto = "";
+
+        function iniciarCarta() {
+            var nombre = document.getElementById('nombre-input').value.trim();
+            
+            if (nombre !== "") {
+                // Definimos el texto personalizado usando el nombre que introduzca
+                textoCompleto = "¡Hola, mi " + nombre + "! ✨\n\n" +
+                                "Hoy en el Día de la Novia quería recordarte que eres mi tesoro más grande en todo el Grand Line. " +
+                                "Desde que comenzamos este viaje juntos, supe que no importan las tormentas ni los caminos difíciles, " +
+                                "porque tenerte a mi lado hace que cada aventura valga la pena.\n\n" +
+                                "Gracias por ser mi compañera, por tu sonrisa y por hacerme tan feliz todos los días. " +
+                                "¡Te amo con todo mi corazón! En este viaje... ¡siempre juntos! 🏴‍☠️❤️";
+
+                // Ocultamos la caja del nombre y mostramos la carta
                 document.getElementById('login-box').classList.add('hidden');
                 document.getElementById('carta-box').classList.remove('hidden');
+                
+                // Iniciamos el efecto de escritura automática paso a paso
+                escribirLetraPorLetra(0);
             } else {
                 alert("¡Por favor, escribe tu nombre para continuar! 😉");
+            }
+        }
+
+        function escribirLetraPorLetra(indice) {
+            if (indice < textoCompleto.length) {
+                var caracter = textoCompleto.charAt(indice);
+                
+                // Si encuentra un salto de línea (\n), lo convierte en una etiqueta <br> para que baje el texto
+                if (caracter === "\n") {
+                    document.getElementById('texto-carta').innerHTML += "<br>";
+                } else {
+                    document.getElementById('texto-carta').innerHTML += caracter;
+                }
+                
+                // Velocidad de escritura en milisegundos (50ms por letra)
+                setTimeout(function() {
+                    escribirLetraPorLetra(indice + 1);
+                }, 50);
+            } else {
+                // Cuando termina de escribir, oculta el cursor parpadeante
+                document.getElementById('cursor-efecto').style.display = 'none';
             }
         }
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Día de la Novia ❤️</title>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 85vh;
+        }
+        .container {
+            background: rgba(30, 41, 59, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid #eab308;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        h1 { color: #eab308; text-shadow: 2px 2px #000; font-size: 26px; margin-bottom: 20px; }
+        p { font-size: 18px; line-height: 1.6; color: #cbd5e1; text-align: left; min-height: 50px; }
+        input {
+            width: 80%;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 1px solid #eab308;
+            background: #1e293b;
+            color: white;
+            text-align: center;
+            font-size: 16px;
+        }
+        button {
+            background: #eab308;
+            color: #000;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover { background: #ca8a04; }
+        .hidden { display: none; }
+        /* Cursor parpadeante simulando la escritura */
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            background-color: #eab308;
+            margin-left: 2px;
+            animation: parpadeo 0.7s infinite;
+        }
+        @keyframes parpadeo {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
 
+    <!-- PANTALLA 1: PIDE EL NOMBRE -->
+    <div id="login-box" class="container">
+        <h1>🏴‍☠️ ¡Alto ahí! 🏴‍☠️</h1>
+        <p style="text-align: center;">Para ingresar a este tesoro del Grand Line, por favor escribe tu nombre:</p>
+        <input type="text" id="nombre-input" placeholder="Tu nombre aquí...">
+        <br>
+        <button onclick="iniciarCarta()">Ingresar</button>
+    </div>
 
+    <!-- PANTALLA 2: LA CARTA DE AMOR CON EFECTO DE ESCRITURA -->
+    <div id="carta-box" class="container hidden">
+        <h1 id="titulo-carta">¡Feliz Día de la Novia! 🏴‍☠️❤️</h1>
+        <p id="texto-carta"></p><span id="cursor-efecto" class="cursor">&nbsp;</span>
+    </div>
+
+    <script>
+        // Aquí puedes cambiar el mensaje largo por el que tú quieras detallar
+        var textoCompleto = "";
+
+        function iniciarCarta() {
+            var nombre = document.getElementById('nombre-input').value.trim();
+            
+            if (nombre !== "") {
+                // Definimos el texto personalizado usando el nombre que introduzca
+                textoCompleto = "¡Hola, mi " + nombre + "! ✨\n\n" +
+                                "Hoy en el Día de la Novia quería recordarte que eres mi tesoro más grande en todo el Grand Line. " +
+                                "Desde que comenzamos este viaje juntos, supe que no importan las tormentas ni los caminos difíciles, " +
+                                "porque tenerte a mi lado hace que cada aventura valga la pena.\n\n" +
+                                "Gracias por ser mi compañera, por tu sonrisa y por hacerme tan feliz todos los días. " +
+                                "¡Te amo con todo mi corazón! En este viaje... ¡siempre juntos! 🏴‍☠️❤️";
+
+                // Ocultamos la caja del nombre y mostramos la carta
+                document.getElementById('login-box').classList.add('hidden');
+                document.getElementById('carta-box').classList.remove('hidden');
+                
+                // Iniciamos el efecto de escritura automática paso a paso
+                escribirLetraPorLetra(0);
+            } else {
+                alert("¡Por favor, escribe tu nombre para continuar! 😉");
+            }
+        }
+
+        function escribirLetraPorLetra(indice) {
+            if (indice < textoCompleto.length) {
+                var caracter = textoCompleto.charAt(indice);
+                
+                // Si encuentra un salto de línea (\n), lo convierte en una etiqueta <br> para que baje el texto
+                if (caracter === "\n") {
+                    document.getElementById('texto-carta').innerHTML += "<br>";
+                } else {
+                    document.getElementById('texto-carta').innerHTML += caracter;
+                }
+                
+                // Velocidad de escritura en milisegundos (50ms por letra)
+                setTimeout(function() {
+                    escribirLetraPorLetra(indice + 1);
+                }, 50);
+            } else {
+                // Cuando termina de escribir, oculta el cursor parpadeante
+                document.getElementById('cursor-efecto').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
